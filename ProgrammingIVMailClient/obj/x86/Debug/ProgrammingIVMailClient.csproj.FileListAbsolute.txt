@@ -1,0 +1,13 @@
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\bin\Debug\ProgrammingIVMailClient.exe
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\bin\Debug\ProgrammingIVMailClient.pdb
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\bin\Debug\OpenPop.dll
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\obj\x86\Debug\ProgrammingIVMailClient.ConnectionProperties.resources
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\obj\x86\Debug\ProgrammingIVMailClient.Form1.resources
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\obj\x86\Debug\ProgrammingIVMailClient.Properties.Resources.resources
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\obj\x86\Debug\ResGen.read.1.tlog
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\obj\x86\Debug\ResGen.write.1.tlog
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\obj\x86\Debug\ProgrammingIVMailClient.exe
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\obj\x86\Debug\ProgrammingIVMailClient.pdb
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\bin\Debug\ProgrammingIVMailClient.exe.config
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\obj\x86\Debug\ProgrammingIVMailClient.NewMail.resources
