@@ -39,6 +39,7 @@
             this.tb_bcc = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.cb_encrypt = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -136,11 +137,22 @@
             this.label4.TabIndex = 9;
             this.label4.Text = "BCC";
             // 
+            // cb_encrypt
+            // 
+            this.cb_encrypt.AutoSize = true;
+            this.cb_encrypt.Location = new System.Drawing.Point(22, 440);
+            this.cb_encrypt.Name = "cb_encrypt";
+            this.cb_encrypt.Size = new System.Drawing.Size(108, 17);
+            this.cb_encrypt.TabIndex = 10;
+            this.cb_encrypt.Text = "Encrypt with AES";
+            this.cb_encrypt.UseVisualStyleBackColor = true;
+            // 
             // NewMail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(459, 476);
+            this.Controls.Add(this.cb_encrypt);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tb_bcc);
@@ -171,5 +183,6 @@
         private System.Windows.Forms.TextBox tb_bcc;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox cb_encrypt;
     }
 }

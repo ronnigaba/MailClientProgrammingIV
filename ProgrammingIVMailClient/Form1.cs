@@ -6,12 +6,15 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Net.Mail;
+using OpenPop.Mime.Header;
 
 namespace ProgrammingIVMailClient
 {
     public partial class Form1 : Form
     {
         OpenPop.Pop3.Pop3Client popClient = new OpenPop.Pop3.Pop3Client();
+        OpenPop.Mime.Message[] mails;
 
         public Form1()
         {
@@ -28,7 +31,7 @@ namespace ProgrammingIVMailClient
             NewMail sendMail = new NewMail(); //Pass the connection# to the sendmail form
             sendMail.Show();
         }
-        private void getMail(int connection) //Implement this function in a background-worker thread.
+        private void getMail(int connection)
         {
             do{
             popClient.Connect(Properties.Settings.Default["popaddress" + connection].ToString(), int.Parse(Properties.Settings.Default["popport" + connection].ToString()), true);
@@ -37,10 +40,11 @@ namespace ProgrammingIVMailClient
             popClient.Authenticate(Properties.Settings.Default["username" + connection].ToString(), Properties.Settings.Default["password" + connection].ToString());
             if (popClient.Connected == true)
             {
-                createTab(connection);
                 ListView lv_mail = (ListView)this.Controls.Find("lv_mails" + connection, true)[0];
-                for (int i = popClient.GetMessageCount(); i >= (popClient.GetMessageCount() - 20); i--)
-                    lv_mail.Items.Add(popClient.GetMessage(i).Headers.Subject.ToString());
+                mails = new OpenPop.Mime.Message[popClient.GetMessageCount()+1];
+
+                for (int i = 1; i <= 20; i++)
+                    mails[i - 1] = popClient.GetMessage(i);
             }
         }
         private void deleteMail(object sender, EventArgs e) //Currently broken
@@ -62,8 +66,27 @@ namespace ProgrammingIVMailClient
             ListView listview = (ListView)sender;
             int connection = int.Parse(listview.Name.Substring(listview.Name.Length - 1));
 
-            //popClient.GetMessage(listview.SelectedItems[0].Index);
-            TextBox tb_from = (TextBox)this.Controls.Find("tb_from" + connection, true)[0];
+            TextBox tb_from = (TextBox)this.Controls.Find("tb_from" + connection, true)[0]; tb_from.Text = "";
+            TextBox tb_to = (TextBox)this.Controls.Find("tb_to" + connection, true)[0]; tb_to.Text = "";
+            TextBox tb_cc = (TextBox)this.Controls.Find("tb_cc" + connection, true)[0]; tb_cc.Text = "";
+            TextBox tb_bcc = (TextBox)this.Controls.Find("tb_bcc" + connection, true)[0]; tb_bcc.Text = "";
+            TextBox tb_msg = (TextBox)this.Controls.Find("tb_msg" + connection, true)[0]; tb_msg.Text = "";
+
+            MessageHeader headers = mails[listview.FocusedItem.Index].Headers;
+
+            tb_from.Text = headers.From.Address.ToString();
+            for(int i = 0; i < headers.To.Count;i++)
+                tb_to.Text += headers.To.ToArray()[i].Address.ToString();
+            for (int i = 0; i < headers.Cc.Count(); i++)
+                tb_cc.Text += headers.Cc.ToArray()[i].Address.ToString();
+            for (int i = 0; i < headers.Bcc.Count(); i++)
+                tb_bcc.Text = headers.Bcc.ToArray()[i].Address.ToString();
+
+            if (mails[listview.FocusedItem.Index].FindFirstPlainTextVersion().GetBodyAsText() != null)
+                tb_msg.Text = mails[listview.FocusedItem.Index].FindFirstPlainTextVersion().GetBodyAsText();
+            else
+                tb_msg.Text = "~This mail did not contain any text!~";
+            
         }
         private void createTab(int connection)
         {
@@ -146,7 +169,27 @@ namespace ProgrammingIVMailClient
         private void Form1_Load(object sender, EventArgs e)
         {
             //For-loop to check for properties.settings and run getmail(int) for each set of settings
+            createTab(1);
+            BackgroundWorker bw = new BackgroundWorker();
+            bw.DoWork += new DoWorkEventHandler(bw_DoWork);
+            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
+            bw.RunWorkerAsync();
+        }
+        private void bw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            //Check settings and getmail for each set.
             getMail(1);
+        }
+        private void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            ListView lv_mail = (ListView)this.Controls.Find("lv_mails" + 1,true)[0];
+
+            for (int i = 0; i < mails.Length; i++)
+            {
+                if(mails[i] != null)
+                    lv_mail.Items.Add(mails[i].Headers.Subject);
+                lv_mail.Update();
+            }
         }
     }
 }
