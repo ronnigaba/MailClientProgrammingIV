@@ -11,3 +11,9 @@ C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIV
 C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\obj\x86\Debug\ProgrammingIVMailClient.pdb
 C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\bin\Debug\ProgrammingIVMailClient.exe.config
 C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\obj\x86\Debug\ProgrammingIVMailClient.NewMail.resources
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\bin\Debug\da\ProgrammingIVMailClient.resources.dll
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\bin\Debug\en\ProgrammingIVMailClient.resources.dll
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\obj\x86\Debug\ProgrammingIVMailClient.Form1.da.resources
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\obj\x86\Debug\ProgrammingIVMailClient.Form1.en.resources
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\obj\x86\Debug\da\ProgrammingIVMailClient.resources.dll
+C:\Users\39011\Desktop\MVVMTrainingProject\ProgrammingIVMailClient\ProgrammingIVMailClient\obj\x86\Debug\en\ProgrammingIVMailClient.resources.dll

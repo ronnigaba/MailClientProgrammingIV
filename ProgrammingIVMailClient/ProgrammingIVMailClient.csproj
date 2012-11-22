@@ -87,6 +87,12 @@
     <EmbeddedResource Include="ConnectionProperties.resx">
       <DependentUpon>ConnectionProperties.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form1.da.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.en.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

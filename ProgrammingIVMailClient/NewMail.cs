@@ -8,9 +8,12 @@ namespace ProgrammingIVMailClient
 {
     public partial class NewMail : Form
     {
-        public NewMail()
+        int connection;
+
+        public NewMail(int connection)
         {
             InitializeComponent();
+            this.connection = connection;
         }
 
         private void btn_send_Click(object sender, EventArgs e)
@@ -27,9 +30,9 @@ namespace ProgrammingIVMailClient
             else
                 mail.Body = tb_body.Text;
             mail.From = new System.Net.Mail.MailAddress("lala@lala.com"); //Dummy address, network credentials seems to figure out the right address regardless.
-            SmtpClient smtp = new SmtpClient(Properties.Settings.Default["smtpaddress1"].ToString());
-            smtp.Port = int.Parse(Properties.Settings.Default["smtpport1"].ToString());
-            smtp.Credentials = new System.Net.NetworkCredential(Properties.Settings.Default["username1"].ToString(), Properties.Settings.Default["password1"].ToString());
+            SmtpClient smtp = new SmtpClient(Properties.Settings.Default["smtpaddress" + connection].ToString());
+            smtp.Port = int.Parse(Properties.Settings.Default["smtpport" + connection].ToString());
+            smtp.Credentials = new System.Net.NetworkCredential(Properties.Settings.Default["username" + connection].ToString(), Properties.Settings.Default["password" + connection].ToString());
             smtp.EnableSsl = true;
                 
             try

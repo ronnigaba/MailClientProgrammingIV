@@ -30,7 +30,9 @@ namespace ProgrammingIVMailClient
         }
         private void sendMailButton_Click(object sender, EventArgs e)
         {
-            NewMail sendMail = new NewMail(); //Pass the connection# to the sendmail form
+            Button btn = (Button)sender;
+            int conn = int.Parse(btn.Name.Substring(btn.Name.Length - 1));
+            NewMail sendMail = new NewMail(conn); //Pass the connection# to the sendmail form
             sendMail.Show();
         }
         private void getMail(int connection)
@@ -186,9 +188,9 @@ namespace ProgrammingIVMailClient
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            for (int i = 1; i <= 1; i++)
-                createTab(1);
-            backgroundWorker1.RunWorkerAsync();
+             for(int i = 1; i <= 1; i++)
+                createTab(i);
+             backgroundWorker1.RunWorkerAsync();
         }
         private void bw_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -197,7 +199,7 @@ namespace ProgrammingIVMailClient
             {
                 activeConnection = i;
                 getMail(i);
-            }            
+            }
         }
         private void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -217,7 +219,9 @@ namespace ProgrammingIVMailClient
 
         private int getNumofSettings()
         {
-            return 1;
+            int i = 1;
+
+            return i;
         }
     }
 }
