@@ -15,6 +15,8 @@ namespace ProgrammingIVMailClient
     {
         OpenPop.Pop3.Pop3Client popClient = new OpenPop.Pop3.Pop3Client();
         OpenPop.Mime.Message[] mails;
+        int activeConnection = 1;
+        ProgressBar progbar;
 
         public Form1()
         {
@@ -33,6 +35,9 @@ namespace ProgrammingIVMailClient
         }
         private void getMail(int connection)
         {
+            float mailsToGet = 20;
+            progbar = (ProgressBar)this.Controls.Find("pb_progress" + activeConnection, true)[0];
+            
             do{
             popClient.Connect(Properties.Settings.Default["popaddress" + connection].ToString(), int.Parse(Properties.Settings.Default["popport" + connection].ToString()), true);
             } while (popClient.Connected != true);
@@ -40,12 +45,17 @@ namespace ProgrammingIVMailClient
             popClient.Authenticate(Properties.Settings.Default["username" + connection].ToString(), Properties.Settings.Default["password" + connection].ToString());
             if (popClient.Connected == true)
             {
-                ListView lv_mail = (ListView)this.Controls.Find("lv_mails" + connection, true)[0];
                 mails = new OpenPop.Mime.Message[popClient.GetMessageCount()+1];
-
-                for (int i = 1; i <= 20; i++)
+                for (int i = 1; i <= mailsToGet; i++)
+                {
                     mails[i - 1] = popClient.GetMessage(i);
+                    backgroundWorker1.ReportProgress(roundPercentage((i / mailsToGet) * 100));
+                }
             }
+        }
+        private int roundPercentage(float percentage) //Takes care of the progressbar-issue
+        {
+            return (int)Math.Ceiling(percentage);
         }
         private void deleteMail(object sender, EventArgs e) //Currently broken
         {
@@ -98,6 +108,14 @@ namespace ProgrammingIVMailClient
             listview.View = View.List;
             listview.SelectedIndexChanged += new EventHandler(mailSelectionChanged);
             page.Controls.Add(listview);
+
+            ProgressBar progBar = new ProgressBar();
+            progBar.SetBounds(6, 239, 360, 23);
+            progBar.Name = "pb_progress" + connection;
+            progBar.Style = ProgressBarStyle.Blocks;
+            page.Controls.Add(progBar);
+            progBar.BringToFront();
+            
 
             Button button_compose = new Button();
             button_compose.Name = "btn_compose" + connection;
@@ -168,28 +186,38 @@ namespace ProgrammingIVMailClient
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            //For-loop to check for properties.settings and run getmail(int) for each set of settings
-            createTab(1);
-            BackgroundWorker bw = new BackgroundWorker();
-            bw.DoWork += new DoWorkEventHandler(bw_DoWork);
-            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
-            bw.RunWorkerAsync();
+            for (int i = 1; i <= 1; i++)
+                createTab(1);
+            backgroundWorker1.RunWorkerAsync();
         }
         private void bw_DoWork(object sender, DoWorkEventArgs e)
         {
             //Check settings and getmail for each set.
-            getMail(1);
+            for (int i = 1; i <= 1; i++)
+            {
+                activeConnection = i;
+                getMail(i);
+            }            
+        }
+        private void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progbar.Value = e.ProgressPercentage;
         }
         private void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            ListView lv_mail = (ListView)this.Controls.Find("lv_mails" + 1,true)[0];
-
+            ListView lv_mail = (ListView)this.Controls.Find("lv_mails" + activeConnection,true)[0];
+            progbar.Hide();
             for (int i = 0; i < mails.Length; i++)
             {
                 if(mails[i] != null)
                     lv_mail.Items.Add(mails[i].Headers.Subject);
                 lv_mail.Update();
             }
+        }
+
+        private int getNumofSettings()
+        {
+            return 1;
         }
     }
 }
