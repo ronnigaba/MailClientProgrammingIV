@@ -25,7 +25,8 @@ namespace ProgrammingIVMailClient
 
         private void connectAccountToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConnectionProperties connProp = new ConnectionProperties();
+            int nextConnection = activeConnection + 1;
+            ConnectionProperties connProp = new ConnectionProperties(nextConnection);
             connProp.ShowDialog();
         }
         private void sendMailButton_Click(object sender, EventArgs e)
@@ -59,7 +60,7 @@ namespace ProgrammingIVMailClient
         {
             return (int)Math.Ceiling(percentage);
         }
-        private void deleteMail(object sender, EventArgs e) //Currently broken
+        private void deleteMail(object sender, EventArgs e)
         {
             Button button = (Button)sender;
             int connection = int.Parse(button.Name.Substring(button.Name.Length - 1));
@@ -67,10 +68,8 @@ namespace ProgrammingIVMailClient
             ListView listview = (ListView)this.Controls.Find("lv_mails" + connection, true)[0];
             if (popClient.Connected == true)
             {
-                foreach(int msg in listview.SelectedItems) //Here!
-                {
-                    popClient.DeleteMessage(msg);
-                }
+                popClient.DeleteMessage(listview.FocusedItem.Index);
+                listview.Items.Remove(listview.FocusedItem);
             }
         }
         private void mailSelectionChanged(object sender, EventArgs e)
@@ -188,14 +187,14 @@ namespace ProgrammingIVMailClient
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-             for(int i = 1; i <= 1; i++)
+            for (int i = 1; i <= Properties.Settings.Default.Properties.Count / 7; i++)
                 createTab(i);
              backgroundWorker1.RunWorkerAsync();
         }
         private void bw_DoWork(object sender, DoWorkEventArgs e)
         {
             //Check settings and getmail for each set.
-            for (int i = 1; i <= 1; i++)
+            for (int i = 1; i <= Properties.Settings.Default.Properties.Count / 7; i++)
             {
                 activeConnection = i;
                 getMail(i);
@@ -219,8 +218,14 @@ namespace ProgrammingIVMailClient
 
         private int getNumofSettings()
         {
-            int i = 1;
-
+            string test; int i = 1;
+            try
+            {
+                for(i = 1; i <= 5; i++)
+                    test = Properties.Settings.Default["connname" + i].ToString();
+                i++;
+            }
+            catch { }
             return i;
         }
     }
